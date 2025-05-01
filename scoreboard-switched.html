@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 10px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .scoreboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: auto;
+            gap: 15px;
+            width: 90%;
+            max-width: 1200px;
+        }
+        .section {
+            background-color: #444;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 200px;
+        }
+        .side-by-side-container {
+            grid-column: span 3;
+            display: flex;
+            justify-content: center;
+            gap: 50px; /* Adjust the gap between the boxes */
+        }
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .score {
+            font-size: 48px;
+            padding: 5px 15px;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            min-width: 80px;
+            text-align: center;
+        }
+        .home-score {
+            color: red;
+        }
+        .guest-score {
+            color: green;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-red {
+            background-color: red;
+            color: white;
+        }
+        .btn-green {
+            background-color: green;
+            color: white;
+        }
+        .btn-gray {
+            background-color: gray;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>eGRUDGY 1.0</h1>
+    <div class="scoreboard">
+        <!-- Overall Score -->
+        <div class="section">
+            <h2>OVERALL SCORE</h2>
+            <div class="score-row">
+                <div>
+                    <span>Home</span>
+                    <div class="score home-score" id="overall-home">00</div>
+                </div>
+                <div>
+                    <span>Guest</span>
+                    <div class="score guest-score" id="overall-guest">00</div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn-red" onclick="adjustScore('overall-home', -1)">-</button>
+                <button class="btn-red" onclick="adjustScore('overall-home', 1)">+</button>
+                <button class="btn-green" onclick="adjustScore('overall-guest', -1)">-</button>
+                <button class="btn-green" onclick="adjustScore('overall-guest', 1)">+</button>
+            </div>
+        </div>
+        <!-- QTR -->
+        <div class="section">
+            <h2>QTR</h2>
+            <div class="score" id="quarter">4</div>
+            <div class="button-group">
+                <button class="btn-gray" onclick="adjustQuarter(-1)">-</button>
+                <button class="btn-gray" onclick="adjustQuarter(1)">+</button>
+            </div>
+        </div>
+        <!-- Current Scores -->
+        <div class="section">
+            <h2>CURRENT SCORE</h2>
+            <div class="score-row">
+                <div>
+                    <span>Home</span>
+                    <div class="score home-score" id="current-home">00</div>
+                </div>
+                <div>
+                    <span>Guest</span>
+                    <div class="score guest-score" id="current-guest">00</div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn-red" onclick="adjustScore('current-home', -1)">-</button>
+                <button class="btn-red" onclick="adjustScore('current-home', 1)">+</button>
+                <button class="btn-green" onclick="adjustScore('current-guest', -1)">-</button>
+                <button class="btn-green" onclick="adjustScore('current-guest', 1)">+</button>
+            </div>
+        </div>
+        <!-- Set Scores and Bonus Scores Side by Side -->
+        <div class="side-by-side-container">
+            <!-- Set Scores -->
+            <div class="section">
+                <h2>SET SCORES</h2>
+                <div class="score-row">
+                    <div>
+                        <span>Home</span>
+                        <div class="score home-score" id="set-home">00</div>
+                    </div>
+                    <div>
+                        <span>Guest</span>
+                        <div class="score guest-score" id="set-guest">00</div>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn-red" onclick="adjustScore('set-home', -1)">-</button>
+                    <button class="btn-red" onclick="adjustScore('set-home', 1)">+</button>
+                    <button class="btn-green" onclick="adjustScore('set-guest', -1)">-</button>
+                    <button class="btn-green" onclick="adjustScore('set-guest', 1)">+</button>
+                </div>
+            </div>
+            <!-- Bonus Scores -->
+            <div class="section">
+                <h2>BONUS SCORES</h2>
+                <div class="score-row">
+                    <div>
+                        <span>Home</span>
+                        <div class="score home-score" id="bonus-home">00</div>
+                    </div>
+                    <div>
+                        <span>Guest</span>
+                        <div class="score guest-score" id="bonus-guest">00</div>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn-red" onclick="adjustScore('bonus-home', -1)">-</button>
+                    <button class="btn-red" onclick="adjustScore('bonus-home', 1)">+</button>
+                    <button class="btn-green" onclick="adjustScore('bonus-guest', -1)">-</button>
+                    <button class="btn-green" onclick="adjustScore('bonus-guest', 1)">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function adjustScore(id, value) {
+            const element = document.getElementById(id);
+            let score = parseInt(element.innerText);
+            score = Math.max(0, score + value); // Prevent negative scores
+            element.innerText = score.toString().padStart(2, '0');
+        }
+
+        function adjustQuarter(value) {
+            const element = document.getElementById('quarter');
+            let quarter = parseInt(element.innerText);
+            quarter = Math.max(1, quarter + value); // Minimum quarter is 1
+            element.innerText = quarter;
+        }
+    </script>
+</body>
+</html>
